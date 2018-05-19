@@ -31,6 +31,8 @@ class LoginController extends Controller
    {
        if($user->role === 'employee') {
            return redirect()->route('school');
+       } else if($user->role === 'auditor'){
+         return redirect()->route('auditor');
        }
 
        return redirect()->route('user');

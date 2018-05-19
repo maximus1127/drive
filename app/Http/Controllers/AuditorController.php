@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Drive;
 use App\School;
-use App\Instructor;
-use App\Grade;
+use App\User;
 
-
-class UserController extends Controller
+class AuditorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +15,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('userIndex');
+      $schools = School::all();
+      $students = User::where('role', 'student')->get();
+
+        return view('auditorIndex')->with(['schools' => $schools, 'students' => $students]);
     }
 
     /**
@@ -51,21 +50,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-      $results = User::find($id);
-        $check = Grade::where('user_id', $id)->get();
-        if ($check->count() != 0){
-        $final_grade = round((($results->grade->chapter_1 + $results->grade->chapter_2 + $results->grade->chapter_3 + $results->grade->chapter_4 + $results->grade->chapter_5 + $results->grade->chapter_6 + $results->grade->chapter_7 + $results->grade->chapter_8 + $results->grade->chapter_9)/900)*100,1);
-        }
-        else {
-            $final_grade = 0;
-        }
-        $drives = Drive::with(['instructor'])->where('student_id', $id)->get();
-      $school=School::find($results->school_id);
-
-
-//        print_r ($drives); exit;
-      return view('auditor_pages.student_profile')->with(['results'=> $results, 'final_grade'=> $final_grade, 'school'=>$school, 'drives'=>$drives]);
-
+        //
     }
 
     /**

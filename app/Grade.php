@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grade extends Model
 {
-  public function student()
+  public function user()
   {
-      return $this->belongsTo('App\Student');
+      return $this->belongsTo('App\User');
   }
-  
+
 }

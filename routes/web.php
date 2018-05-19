@@ -28,6 +28,8 @@ Route::get('/view_class/{id}', 'CourseController@show')->name('viewClass');
 Route::get('/edit_class/{id}', 'CourseController@edit')->name('editClass');
 Route::post('/edit_class/{id}', 'CourseController@update')->name('editClass');
 Route::get('/addStudent', 'CourseController@addStudent')->name('addStudent');
-
+Route::get('/auditor', 'AuditorController@index')->name('auditor');
+Route::get('/student/{id}', 'UserController@show')->name('student.profile');
+Route::get('/employee_show/{id}', 'UserController@delete')->name('employee.show');
 
 Route::post('/completeDrive', 'DriveController@complete')->name('completeDrive');

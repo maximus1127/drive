@@ -15,10 +15,19 @@
     <!--[if lt IE 9]-->
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
     <!--[endif]-->
     <!-- global css -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/app.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap4.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/buttons.bootstrap4.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/rowReorder.bootstrap4.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/colReorder.bootstrap4.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/scroller.bootstrap4.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom_css/datatables_custom.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/iCheck/css/all.css')}}"/>
+
 @yield('header_styles')
 <!-- end of global css -->
 </head>
@@ -44,7 +53,7 @@
 </div>
 
 
-            <div class="navbar-collapse " id="navbarNav">
+            {{-- <div class="navbar-collapse " id="navbarNav">
                 <div class="navbar-right ml-auto">
             <ul class="nav navbar-nav ">
                 <li class="nav-item dropdown messages-menu">
@@ -323,19 +332,23 @@
                                     <i class="fa fa-fw fa-lock"></i>
                                     Lock
                                 </a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="{{ URL :: to('login') }} ">
-                                    <i class="fa fa-fw fa-sign-out"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+                            </div>--}}
+                            <a  href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            </form>
+
+                        {{-- </li>
                     </ul>
                 </li>
             </ul>
                 </div>
-        </div>
+        </div>  --}}
     </nav>
 </header>
 <!-- For horizontal menu -->
@@ -349,14 +362,14 @@
             <div id="menu" role="navigation">
                 <div class="nav_profile">
                     <div class="media profile-left">
-                        <a class="pull-left profile-thumb" href="#">
+                        {{-- <a class="pull-left profile-thumb" href="#">
                             <img src="{{asset('assets/img/authors/avatar1.jpg')}}" class="rounded-circle" alt="User Image">
-                        </a>
+                        </a> --}}
                         <div class="content-profile pl-3">
                             <h4 class="media-heading">
-                                Nataliapery
+                                {{Auth::user()->name}}
                             </h4>
-                            <ul class="icon-list list-inline">
+                            {{-- <ul class="icon-list list-inline">
                                 <li>
                                     <a href="{{ URL::to('users') }} ">
                                         <i class="fa fa-fw fa-user"></i>
@@ -377,18 +390,18 @@
                                         <i class="fa fa-fw fa-sign-out"></i>
                                     </a>
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
                 </div>
                 <ul class="navigation">
                     <li {!! (Request::is('index')|| Request::is('/')? 'class="active"':"") !!}>
-                        <a href="{{ URL::to('index') }} ">
+                        <a href="{{ URL::to('/auditor') }} ">
                             <i class="menu-icon fa fa-fw fa-home"></i>
-                            <span class="mm-text ">Dashboard V1</span>
+                            <span class="mm-text ">Dashboard</span>
                         </a>
                     </li>
-                    <li {!! (Request::is('index2')? 'class="active"':"") !!}>
+                    {{-- <li {!! (Request::is('index2')? 'class="active"':"") !!}>
                         <a href="{{ URL::to('index2') }} ">
                             <i class="menu-icon fa fa-fw fa-tachometer"></i>
                             <span class="mm-text ">Dashboard V2</span>
@@ -643,22 +656,22 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li {!! (Request::is('calendar')||Request::is('calendar2')? 'class="active"':"") !!} class="">
+                    </li>--}}
+                    {{-- <li {!! (Request::is('calendar')||Request::is('calendar2')? 'class="active"':"") !!} class="">
                         <a href="#" >
                             <i class="menu-icon fa fa-fw fa-calendar"></i>
                             <span>Calendar</span>
                             <span class="fa arrow"></span>
                         </a>
-                        <ul class="sub-menu">
-                            <li {!! (Request::is('calendar')? 'class="active"':"") !!}>
+                        <ul class="sub-menu"> --}}
+                            {{-- <li {!! (Request::is('calendar')? 'class="active"':"") !!}>
                                 <a href="{{URL::to('calendar')}} " class="calendar-badge">
                                     <i class=" menu-icon fa fa-fw fa-calendar"></i>
                                     <span>Calendar</span>
                                     <small {!! (Request::is('calendar')? 'class="badge float-right text-white badge-success badge1   badge-pill"':'class="badge badge-success text-white  float-right  badge-pill"') !!} >7</small>
                                 </a>
-                            </li>
-                            <li id="active" {!! (Request::is('calendar2')? 'class="active"':"") !!}>
+                            </li> --}}
+                            {{-- <li id="active" {!! (Request::is('calendar2')? 'class="active"':"") !!}>
                                 <a href="{{URL::to('calendar2')}} ">
                                     <i class=" menu-icon fa fa-fw fa-calendar-o"></i>
                                     <span>Advanced Calendar</span>
@@ -666,7 +679,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
+                    {{--
                     <li {!! (Request::is('masonry_gallery')||Request::is('multiplefile_upload')||Request::is('dropify')||Request::is('image_hover')||Request::is('image_filter')||Request::is('image_magnifier')? 'class="active"':"") !!}>
                         <a href="#">
                             <i class="menu-icon fa fa-fw fa-photo"></i>
@@ -705,7 +719,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>--}}
                     <li {!! (Request::is('users/*')||Request::is('addnew_user')||Request::is('edit_user')||Request::is('user_profile')||Request::is('deleted_users')? 'class="active"':"") !!}>
                         <a href="#">
                             <i class="menu-icon fa fa-fw fa-users"></i>
@@ -734,7 +748,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>{{--
                     <li {!! (Request::is('google_maps')||Request::is('vector_maps')||Request::is('advanced_maps')? 'class="active"':"") !!}>
                         <a href="#">
                             <i class="menu-icon fa fa-map-marker"></i>
@@ -991,7 +1005,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
                 <!-- / .navigation -->
             </div>
@@ -1008,6 +1022,7 @@
 <!-- wrapper-->
 <!-- global js -->
 <script src="{{asset('assets/js/app.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="{{asset('assets/js/custom_js/advanced_modals.js')}}"></script>
 <!-- end of global js -->
 @yield('footer_scripts')
 <!-- end page level js -->

@@ -62,5 +62,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Course');
     }
 
+    /**
+        * Check if this user belongs to a role
+        *
+        * @return bool
+        */
+       public function hasRole($role)
+       {
+           return $this->role == $role;
+       }
 
 }

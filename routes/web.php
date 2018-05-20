@@ -17,19 +17,28 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/userIndex', 'UserController@index')->name('user');
+Route::get('/userIndex', 'UserController@index')->name('user'); //for students
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//for schools
 Route::get('/school','SchoolController@index')->name('school');
-
-
 Route::get('/register_new_class', 'CourseController@create')->name('createClass');
 Route::post('/register_new_class', 'CourseController@store')->name('createClass');
 Route::get('/view_class/{id}', 'CourseController@show')->name('viewClass');
 Route::get('/edit_class/{id}', 'CourseController@edit')->name('editClass');
 Route::post('/edit_class/{id}', 'CourseController@update')->name('editClass');
 Route::get('/addStudent', 'CourseController@addStudent')->name('addStudent');
+Route::get('/submit_application', 'ApplicationsController@create')->name('submit.application');
+Route::post('/submit_application', 'ApplicationsController@store')->name('submit.application');
+Route::post('/completeDrive', 'DriveController@complete')->name('completeDrive');
+Route::get('/school_instructor_list', 'InstructorsController@school_index')->name('school.instructors');
+Route::get('/school_instructor_profile/{id}', 'InstructorsController@school_show')->name('school.instructor.profile');
+
+
+//for the state
 Route::get('/auditor', 'AuditorController@index')->name('auditor');
 Route::get('/student/{id}', 'UserController@show')->name('student.profile');
 Route::get('/employee_show/{id}', 'UserController@delete')->name('employee.show');
-
-Route::post('/completeDrive', 'DriveController@complete')->name('completeDrive');
+Route::get('/instructor_profile/{id}', 'InstructorsController@auditor_show')->name('instructor.profile');
+Route::get('/all_instructors', 'InstructorsController@index')->name('all.instructors');

@@ -191,7 +191,7 @@
                                 <thead>
                                 <tr>
                                   @php(
-                                    $courses = App\Course::where('school_id', Auth::user()->school_id)->orderBy('day_1', 'desc')->get()
+                                    $courses = App\Course::where('school_id', Auth::user()->school_id)->orderBy('day_1', 'desc')->paginate(10)
                                   )
                                     <th>Day 1</th>
                                     <th>Day 2</th>
@@ -221,6 +221,7 @@
                                     </td>
                                 </tr>
                               @endforeach
+                              {{ $courses->links() }}
 
                                 </tbody>
                             </table>

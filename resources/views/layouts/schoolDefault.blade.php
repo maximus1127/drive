@@ -719,36 +719,39 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>--}}
+                    @if(Auth::user()->hasRole('school_admin'))
                     <li {!! (Request::is('users/*')||Request::is('addnew_user')||Request::is('edit_user')||Request::is('user_profile')||Request::is('deleted_users')? 'class="active"':"") !!}>
                         <a href="#">
                             <i class="menu-icon fa fa-fw fa-users"></i>
-                            <span>Users</span> <span
+                            <span>Instructors</span> <span
                                     class="fa arrow"></span>
                         </a>
                         <ul class="sub-menu">
                             <li {!! (Request::is('users')? 'class="active"':"") !!}>
-                                <a href="{{URL::to('users')}} ">
-                                    <i class="fa fa-list" aria-hidden="true"></i> Users List
+                                <a href="{{route('school.instructors')}} ">
+                                    <i class="fa fa-list" aria-hidden="true"></i> Instructors List
                                 </a>
                             </li>
                             <li {!! (Request::is('addnew_user')? 'class="active"':"") !!}>
-                                <a href="{{URL::to('addnew_user')}} ">
-                                    <i class="fa fa-fw fa-user"></i> Add New User
+                                <a href="{{route('submit.application')}} ">
+                                    <i class="fa fa-fw fa-user"></i> Apply For New Instructor
                                 </a>
                             </li>
-                            <li {!! (Request::is('user_profile')? 'class="active"':"") !!}>
+                            {{-- <li {!! (Request::is('user_profile')? 'class="active"':"") !!}>
                                 <a href="{{URL::to('user_profile')}} ">
                                     <i class="fa fa-fw fa-user-md"></i> View Profile
                                 </a>
-                            </li>
+                            </li> --}}
                             <li {!! (Request::is('deleted_users')? 'class="active"':"") !!}>
                                 <a href="{{URL::to('deleted_users')}} ">
-                                    <i class="fa fa-fw fa-times"></i> Deleted Users
+                                    <i class="fa fa-fw fa-times"></i> Inactive Instructors
                                 </a>
                             </li>
                         </ul>
                     </li>
+                  @endif
+                    {{--
                     <li {!! (Request::is('google_maps')||Request::is('vector_maps')||Request::is('advanced_maps')? 'class="active"':"") !!}>
                         <a href="#">
                             <i class="menu-icon fa fa-map-marker"></i>

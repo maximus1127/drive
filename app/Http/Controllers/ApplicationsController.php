@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Application;
 use Auth;
+use Session;
 
 class ApplicationsController extends Controller
 {
@@ -15,7 +16,8 @@ class ApplicationsController extends Controller
      */
     public function index()
     {
-        //
+        $applications = Application::where('status', 'Pending')->get();
+        return view('auditor_pages.all_applications', compact('applications'));
     }
 
     /**
@@ -54,8 +56,9 @@ class ApplicationsController extends Controller
         $app->school_id = Auth::user()->school_id;
         $app->status = "Pending";
 
-        $app->save();
-
+        if($app->save()){
+          Session::flash('success', 'Application Submitted Successfully');
+        }
         return redirect(route('school'));
 
     }
@@ -68,7 +71,30 @@ class ApplicationsController extends Controller
      */
     public function show($id)
     {
-        //
+        $application = Application::findOrFail($id);
+        return view('auditor_pages.application_review', compact('application'));
+    }
+
+    public function approved($id)
+    {
+      $application = Application::findOrFail($id);
+      $application->status = 'Approved';
+      $application->save();
+      return redirect(route('instructor.applications'));
+    }
+    public function denied($id)
+    {
+      $application = Application::findOrFail($id);
+      $application->status = 'Denied';
+      $application->save();
+      return redirect(route('instructor.applications'));
+    }
+    public function saveNotes(Request $request, $id)
+    {
+      $application = Application::findOrFail($id);
+      $application->notes = $request->application_notes;
+      $application->save();
+      return response()->json(['success'=>'Data is successfully added']);
     }
 
     /**

@@ -29,10 +29,15 @@ class LoginController extends Controller
     // protected $redirectTo = '/home';
     protected function authenticated($request, $user)
    {
-       if($user->role === 'employee' or 'school_admin') {
-           return redirect()->route('school');
-       } else if($user->role == 'auditor' or 'auditor_admin'){
-         return redirect()->route('auditor');
+      $user = Auth::user();
+       if($user->role == 'employee') {
+           return redirect(route('school'));
+       } else if($user->role == 'auditor_admin'){
+         return redirect(route('auditor'));
+       } else if($user->role == 'auditor'){
+         return redirect(route('auditor'));
+       } else if($user->role == 'school_admin'){
+         return redirect(route('school'));
        }
 
        return redirect()->route('user');

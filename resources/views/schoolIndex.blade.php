@@ -19,6 +19,14 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      @if(Session::get('success'))
+        <script>
+
+      window.onload = function () { alert("{{Session::get('success')}}") }
+}, 500);
+
+        </script>
+      @endif
         <div class="row">
             <div class="col-lg-6">
                 <!-- First Basic Table strats here-->

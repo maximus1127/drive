@@ -35,6 +35,29 @@ class InstructorsController extends Controller
         //
     }
 
+    public function saveNotes(Request $request, $id)
+    {
+      $instructor = Instructor::findOrFail($id);
+      $instructor->notes = $request->instructor_notes;
+      $instructor->save();
+      return redirect(route('auditor'));
+    }
+
+    public function activate($id)
+    {
+      $instructor = Instructor::findOrFail($id);
+      $instructor->status = 1;
+      $instructor->save();
+      return redirect(route('instructor.profile', $id));
+    }
+    public function deactivate($id)
+    {
+      $instructor = Instructor::findOrFail($id);
+      $instructor->status = 0;
+      $instructor->save();
+      return redirect(route('instructor.profile', $id));
+    }
+
     /**
      * Store a newly created resource in storage.
      *

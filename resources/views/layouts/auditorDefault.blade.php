@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <title>
         @section('title')
-            | Core + Admin Template
+            Auditor
         @show
     </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{asset('assets/img/favicon.ico')}}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/scroller.bootstrap4.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom_css/datatables_custom.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/iCheck/css/all.css')}}"/>
+
 
 @yield('header_styles')
 <!-- end of global css -->
@@ -724,7 +726,10 @@
                     <li {!! (Request::is('users/*')||Request::is('addnew_user')||Request::is('edit_user')||Request::is('user_profile')||Request::is('deleted_users')? 'class="active"':"") !!}>
                         <a href="#">
                             <i class="menu-icon fa fa-fw fa-users"></i>
-                            <span>Instructors</span> <span class="label bg-success">2</span> <span
+                            @php(
+                              $count = count(App\Application::where('status', 'Pending')->get())
+                            )
+                            <span>Instructors</span>@if($count>0) <span class="label bg-success">{{$count}}</span>@endif <span
                                     class="fa arrow"></span>
                         </a>
                         <ul class="sub-menu">
@@ -734,8 +739,8 @@
                                 </a>
                             </li>
                             <li {!! (Request::is('addnew_user')? 'class="active"':"") !!}>
-                                <a href="{{URL::to('addnew_user')}} ">
-                                    <i class="fa fa-fw fa-user"></i> Instructor Applications
+                                <a href="{{route('instructor.applications')}} ">
+                                    <i class="fa fa-fw fa-user"></i> Instructor Applications @if($count > 0) <span class="label bg-success">{{$count}}</span> @endif
                                 </a>
                             </li>
                             {{-- <li {!! (Request::is('user_profile')? 'class="active"':"") !!}>
@@ -1028,6 +1033,7 @@
 <!-- global js -->
 <script src="{{asset('assets/js/app.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="{{asset('assets/js/custom_js/advanced_modals.js')}}"></script>
+
 <!-- end of global js -->
 @yield('footer_scripts')
 <!-- end page level js -->

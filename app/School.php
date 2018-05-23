@@ -37,4 +37,9 @@ class School extends Model
   {
       return $this->hasMany('App\Payment');
   }
+
+  public function application()
+  {
+    return $this->hasMany('App\Application');
+  }
 }

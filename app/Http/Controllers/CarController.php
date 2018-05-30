@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\School;
-use Auth;
-use App\Roster;
-use App\Car;
 
-class SchoolController extends Controller
+class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +13,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-      $school = School::where('id', Auth::user()->school_id)->get();
-      $car = Car::where('school_id', Auth::user()->school_id)->get();
-
-        return view('schoolIndex')->with(['school'=> $school, 'car' => $car]);
+        //
     }
 
     /**
@@ -52,9 +45,7 @@ class SchoolController extends Controller
      */
     public function show($id)
     {
-      $school = School::findOrFail($id);
-
-        return view('auditor_pages.school_audit')->with(['school'=> $school]);
+        //
     }
 
     /**

@@ -20,4 +20,8 @@ class Drive extends Model
   {
       return $this->belongsTo('App\School');
   }
+  public function car()
+  {
+    return $this->belongsTo('App\Car');
+  }
 }

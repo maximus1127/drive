@@ -1,15 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,3 +40,8 @@ Route::post('/application-notes-save/{id}', 'ApplicationsController@saveNotes')-
 Route::post('/instructor-notes-save/{id}', 'InstructorsController@saveNotes')->name('instructor.save.note');
 Route::get('/instructor-deactivate/{id}', 'InstructorsController@deactivate')->name('instructor.deactivate');
 Route::get('/instructor-activate/{id}', 'InstructorsController@activate')->name('instructor.activate');
+Route::post('/application-background-sent/{id}', 'ApplicationsController@backgroundSent');
+Route::post('/application-background-received/{id}', 'ApplicationsController@backgroundReceived');
+Route::get('/school_show/{id}', 'SchoolController@show')->name('school.show');
+Route::get('/roster_school/roster/{id}', 'RostersController@show')->name('rosterView');
+Route::get('/car-log/{id}', 'DriveController@show')->name('carLog');

@@ -54,9 +54,15 @@
                                 <tbody>
                                   @foreach ($schools as $school)
                                     <tr>
+                                      @if(Auth::user()->role == "auditor_admin")
+                                      <td>
+                                      <a href="{{route('school.show' , $school->id)}}">{{$school->name}}</a>
+                                      </td>
+                                    @else
                                       <td>
                                         {{$school->name}}
                                       </td>
+                                    @endif
                                       <td>
                                         {{$school->address_1.', '.$school->city}}
                                       </td>

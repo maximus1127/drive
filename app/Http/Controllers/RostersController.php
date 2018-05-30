@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\School;
-use Auth;
 use App\Roster;
-use App\Car;
+use App\School;
 
-class SchoolController extends Controller
+class RostersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +15,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-      $school = School::where('id', Auth::user()->school_id)->get();
-      $car = Car::where('school_id', Auth::user()->school_id)->get();
-
-        return view('schoolIndex')->with(['school'=> $school, 'car' => $car]);
+        //
     }
 
     /**
@@ -50,12 +45,13 @@ class SchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-      $school = School::findOrFail($id);
+     public function show($id)
+     {
+         $roster = Roster::with('user')->where('course_id', $id)->get();
 
-        return view('auditor_pages.school_audit')->with(['school'=> $school]);
-    }
+
+         return view('auditor_pages.roster', compact('roster'));
+     }
 
     /**
      * Show the form for editing the specified resource.

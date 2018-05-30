@@ -46,7 +46,10 @@ class DriveController extends Controller
      */
     public function show($id)
     {
-        //
+      $drives = Drive::where('car_id', $id)->get();
+
+
+      return view('auditor_pages.carlog')->with(['drives' => $drives]);
     }
 
     /**

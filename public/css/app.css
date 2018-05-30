@@ -15,3 +15,15 @@
   body {
     background-color: #c9c9c9;
   }
+
+  .info-block
+  {
+    padding: 20px;
+    border-left: 2px solid black;
+    width: 25%;
+    float: left;
+  }
+
+  a {
+    color: black;
+  }

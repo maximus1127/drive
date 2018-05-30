@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Application;
 use Auth;
 use Session;
+use Carbon\Carbon;
 
 class ApplicationsController extends Controller
 {
@@ -93,6 +94,24 @@ class ApplicationsController extends Controller
     {
       $application = Application::findOrFail($id);
       $application->notes = $request->application_notes;
+      $application->save();
+      return response()->json(['success'=>'Data is successfully added']);
+    }
+
+    public function backgroundSent($id)
+    {
+      $application = Application::findOrFail($id);
+      $application->bg_check_submitted_by = Auth::user()->id;
+      $application->bg_submitted_on = Carbon::now();
+      $application->save();
+      return response()->json(['success'=>'Data is successfully added']);
+    }
+
+    public function backgroundReceived($id)
+    {
+      $application = Application::findOrFail($id);
+      $application->bg_check_received_by = Auth::user()->id;
+      $application->bg_received_on = Carbon::now();
       $application->save();
       return response()->json(['success'=>'Data is successfully added']);
     }

@@ -2,7 +2,7 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcometemplate');
 });
 
 Auth::routes();
@@ -12,7 +12,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //for schools
-Route::get('/school','SchoolController@index')->name('school');
+Route::prefix('school')->middleware(['auth','school'])->group(function () {
+
+Route::get('/','SchoolController@index')->name('school');
 Route::get('/register_new_class', 'CourseController@create')->name('createClass');
 Route::post('/register_new_class', 'CourseController@store')->name('createClass');
 Route::get('/view_class/{id}', 'CourseController@show')->name('viewClass');
@@ -24,10 +26,11 @@ Route::post('/submit_application', 'ApplicationsController@store')->name('submit
 Route::post('/completeDrive', 'DriveController@complete')->name('completeDrive');
 Route::get('/school_instructor_list', 'InstructorsController@school_index')->name('school.instructors');
 Route::get('/school_instructor_profile/{id}', 'InstructorsController@school_show')->name('school.instructor.profile');
-
+});
 
 //for the state
-Route::get('/auditor', 'AuditorController@index')->name('auditor');
+Route::prefix('auditor')->middleware(['auth','auditor'])->group(function () {
+Route::get('/', 'AuditorController@index')->name('auditor');
 Route::get('/student/{id}', 'UserController@show')->name('student.profile');
 Route::get('/employee_show/{id}', 'UserController@delete')->name('employee.show');
 Route::get('/instructor_profile/{id}', 'InstructorsController@auditor_show')->name('instructor.profile');
@@ -45,3 +48,5 @@ Route::post('/application-background-received/{id}', 'ApplicationsController@bac
 Route::get('/school_show/{id}', 'SchoolController@show')->name('school.show');
 Route::get('/roster_school/roster/{id}', 'RostersController@show')->name('rosterView');
 Route::get('/car-log/{id}', 'DriveController@show')->name('carLog');
+
+});
